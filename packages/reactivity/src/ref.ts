@@ -115,8 +115,11 @@ class RefImpl<T = any> {
   public readonly [ReactiveFlags.IS_SHALLOW]: boolean = false
 
   constructor(value: T, isShallow: boolean) {
+    // _rawValue 最终返回的是一个原始对象
     this._rawValue = isShallow ? value : toRaw(value)
+    // 如果ref是多层嵌套，将其转成reactive
     this._value = isShallow ? value : toReactive(value)
+    // shallow 标识
     this[ReactiveFlags.IS_SHALLOW] = isShallow
   }
 

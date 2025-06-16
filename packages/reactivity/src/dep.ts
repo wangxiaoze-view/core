@@ -105,17 +105,30 @@ export class Dep {
     }
   }
 
+  /**
+   * @param debugInfo {DebuggerEventExtraInfo}
+   * track 是用于依赖追踪的方法。
+   * 可选参数 debugInfo 用于调试时提供额外上下文信息。
+   * 返回值为 Link | undefined：返回的是一个连接对象（表示副作用和依赖之间关系的链表节点），如果没有追踪发生则返回 undefined。
+   */
   track(debugInfo?: DebuggerEventExtraInfo): Link | undefined {
+    /**
+     * activeSub: 当前正在运行的副作用函数（如 effect 或 computed）。
+     * shouldTrack: 控制是否允许追踪（例如在某些情况下禁用追踪）。
+     * 如果不满足条件，则直接返回，不进行依赖追踪。
+     */
     if (!activeSub || !shouldTrack || activeSub === this.computed) {
       return
     }
 
     let link = this.activeLink
+    // 没有则初始化
     if (link === undefined || link.sub !== activeSub) {
       link = this.activeLink = new Link(activeSub, this)
 
       // add the link to the activeEffect as a dep (as tail)
       if (!activeSub.deps) {
+        // 当前搜集的依赖
         activeSub.deps = activeSub.depsTail = link
       } else {
         link.prevDep = activeSub.depsTail

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+<div id="app">
+
+  {{normal}}
+
+
+  <button @click="onClickShallowRef">点击修改shallowRef </button>
+</div>
+
+
+<script src="../../dist/vue.global.js"></script>
+
+<script>
+  const { createApp, ref, shallowRef, defineComponent } = Vue
+
+  const App = defineComponent({
+    name: "App",
+    setup() {
+      const obj = {
+        person_1: {
+          name: '章三',
+          age: 20,
+        },
+        person_2: {
+          name: '李四',
+          age: 40
+        }
+      }
+
+      // const person_1 = shallowRef(obj)
+      // const person_2 = ref(obj)
+
+
+      const normal = ref('msg')
+
+      const onClickShallowRef = () => {
+        // 不会触发 Ref setter
+        // person_1.value.person_1.age++
+        // person_2.value.person_2.age++
+        // 会触发 Ref setter
+        normal.value = '200'
+      }
+      return {
+        normal,
+        // person_1,
+        // person_2,
+        onClickShallowRef
+      }
+    }
+  })
+
+  const app = createApp(App)
+  app.mount('#app')
+
+
+</script>
+
+</body>
+</html>
