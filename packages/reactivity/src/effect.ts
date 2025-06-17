@@ -36,6 +36,7 @@ export interface ReactiveEffectRunner<T = any> {
   effect: ReactiveEffect
 }
 
+// 当前活动的副作用函数
 export let activeSub: Subscriber | undefined
 
 export enum EffectFlags {

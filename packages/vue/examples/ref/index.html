@@ -21,7 +21,7 @@
 <script src="../../dist/vue.global.js"></script>
 
 <script>
-  const { createApp, ref, shallowRef, defineComponent } = Vue
+  const { createApp, ref, shallowRef, defineComponent, triggerRef, watchEffect } = Vue
 
   const App = defineComponent({
     name: "App",
@@ -37,8 +37,12 @@
         }
       }
 
-      // const person_1 = shallowRef(obj)
-      // const person_2 = ref(obj)
+      const person_1 = shallowRef({msg: 'hello world'})
+      watchEffect(() => {
+        console.log(person_1.value.msg)
+      })
+      person_1.value.msg = 'AAA'
+      triggerRef(person_1)
 
 
       const normal = ref('msg')
