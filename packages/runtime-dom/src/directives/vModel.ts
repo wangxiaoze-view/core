@@ -71,6 +71,7 @@ export const vModelText: ModelDirective<
         el.value = el.value.trim()
       })
     }
+    // 此处做了中英文输入优化
     if (!lazy) {
       addEventListener(el, 'compositionstart', onCompositionStart)
       addEventListener(el, 'compositionend', onCompositionEnd)

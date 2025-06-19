@@ -348,8 +348,10 @@ function baseCreateRenderer(
     initFeatureFlags()
   }
 
+  // 全局挂载vue 标识
   const target = getGlobalThis()
   target.__VUE__ = true
+  // 设置调试工具
   if (__DEV__ || __FEATURE_PROD_DEVTOOLS__) {
     setDevtoolsHook(target.__VUE_DEVTOOLS_GLOBAL_HOOK__, target)
   }
@@ -671,6 +673,7 @@ function baseCreateRenderer(
       )
     }
 
+    // 表示当前 vNode 上定义的指令集合。
     if (dirs) {
       invokeDirectiveHook(vnode, null, parentComponent, 'created')
     }
@@ -705,6 +708,7 @@ function baseCreateRenderer(
       def(el, '__vueParentComponent', parentComponent, true)
     }
 
+    // 自定义指令：beforeMount
     if (dirs) {
       invokeDirectiveHook(vnode, null, parentComponent, 'beforeMount')
     }
@@ -714,15 +718,18 @@ function baseCreateRenderer(
     if (needCallTransitionHooks) {
       transition!.beforeEnter(el)
     }
+    // 创建节点
     hostInsert(el, container, anchor)
     if (
       (vnodeHook = props && props.onVnodeMounted) ||
       needCallTransitionHooks ||
       dirs
     ) {
+      // 队列渲染的副作用函数
       queuePostRenderEffect(() => {
         vnodeHook && invokeVNodeHook(vnodeHook, parentComponent, vnode)
         needCallTransitionHooks && transition!.enter(el)
+        // 运行指令
         dirs && invokeDirectiveHook(vnode, null, parentComponent, 'mounted')
       }, parentSuspense)
     }

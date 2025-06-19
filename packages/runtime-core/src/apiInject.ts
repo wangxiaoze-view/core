@@ -17,6 +17,7 @@ export function provide<T, K = InjectionKey<T> | string | number>(
       warn(`provide() can only be used inside setup().`)
     }
   } else {
+    // TODO: 看到这里
     let provides = currentInstance.provides
     // by default an instance inherits its parent's provides object
     // but when it needs to provide values of its own, it creates its

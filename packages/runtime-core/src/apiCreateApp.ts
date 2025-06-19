@@ -264,6 +264,7 @@ export function createAppAPI<HostElement>(
       rootProps = null
     }
 
+    // 初始化context
     const context = createAppContext()
     const installedPlugins = new WeakSet()
     const pluginCleanupFns: Array<() => any> = []
@@ -392,11 +393,13 @@ export function createAppAPI<HostElement>(
             }
           }
 
+          // render
           if (isHydrate && hydrate) {
             hydrate(vnode as VNode<Node, Element>, rootContainer as any)
           } else {
             render(vnode, rootContainer, namespace)
           }
+          // 渲染完成
           isMounted = true
           app._container = rootContainer
           // for devtools and telemetry

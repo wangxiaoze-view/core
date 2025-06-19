@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .title {
+        color: var(--color);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="title" v-show="show">Title</div>
+
+      <input type="text" v-model.lazy.trim="text" />
+
+      <input type="checkbox" name="checkbox" v-model="checkbox" value="1" />1
+      <input type="checkbox" name="checkbox" v-model="checkbox" value="2" />2
+      <input type="checkbox" name="checkbox" v-model="checkbox" value="3" />3
+    </div>
+
+    <script src="../dist/vue.global.js"></script>
+    <script>
+      const { createApp, defineComponent, ref } = Vue
+
+      const App = defineComponent({
+        name: 'App',
+        setup() {
+          const show = ref(true)
+
+          const text = ref('text')
+
+          const checkbox = ref([])
+
+          return {
+            show,
+            text,
+            checkbox,
+          }
+        },
+      })
+
+      const app = createApp(App)
+      app.mount('#app')
+    </script>
+  </body>
+</html>

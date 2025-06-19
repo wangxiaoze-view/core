@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="title" :style="{color: styles.color}" id="A">
+        Title
+        <span v-highlight="'A'">1</span>
+      </div>
+
+      <button @click="onClick">click</button>
+    </div>
+
+    <script src="../dist/vue.global.js"></script>
+
+    <script>
+      const { createApp, ref, reactive, defineComponent } = Vue
+
+      const App = defineComponent({
+        name: 'App',
+        props: {
+          rootProps: {
+            type: Boolean,
+          },
+        },
+        setup(props) {
+          console.log(props, '组件内接受到的顶级props')
+          const className = ref()
+          const styles = reactive({ color: 'red' })
+          const onClick = () => {
+            styles.color = 'blue'
+          }
+          return {
+            className,
+            onClick,
+            styles,
+          }
+        },
+      })
+
+      const app = createApp(App, {
+        rootProps: true,
+      })
+
+      app.directive('highlight', {
+        created(el, binding) {
+          console.log(el, binding, 'created')
+        },
+      })
+
+      const mount = app.mount('#app')
+      console.log(mount)
+    </script>
+  </body>
+</html>

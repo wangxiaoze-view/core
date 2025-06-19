@@ -46,6 +46,7 @@ function hasOwnProperty(this: object, key: unknown) {
   return obj.hasOwnProperty(key as string)
 }
 
+// getter
 class BaseReactiveHandler implements ProxyHandler<Target> {
   constructor(
     protected readonly _isReadonly = false,
@@ -241,6 +242,7 @@ class ReadonlyReactiveHandler extends BaseReactiveHandler {
   }
 }
 
+// proxy  getter
 export const mutableHandlers: ProxyHandler<object> =
   /*@__PURE__*/ new MutableReactiveHandler()
 
